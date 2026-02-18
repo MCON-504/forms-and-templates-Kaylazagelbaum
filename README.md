@@ -27,6 +27,5 @@ python homework/homework.py
 - `demo/` - Reference examples for Jinja2 templates
 - `exercises/` - In-class work and templates for practice
 - `homework/` - Homework app and templates
-- `templates_completed/` - Completed templates for reference
 
 If you were looking for `HOMEWORK_EXERCISE.md`, the current homework instructions live in `homework/HOMEWORK_README.md`.
