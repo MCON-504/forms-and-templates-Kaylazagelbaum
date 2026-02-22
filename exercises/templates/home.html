@@ -1,7 +1,9 @@
 {% extends "base.html" %}
 
 {% block content %}
-    <h1>Welcome, {{name}}!</h1>
+    <h1>Welcome, {{name|title}}!</h1>
+    <h2>Welcome, {{name|upper}}!</h2>
     <p>Today is {{current date}}</p>
+    <p>{{number|round(2)</p>
 
 {% endblock %}
