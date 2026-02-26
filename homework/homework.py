@@ -17,10 +17,15 @@ def home():
 @app.route("/add", methods=["GET", "POST"])
 def add_student():
     error = None
+    name_value = ""
+    grade_value = ""
 
     if request.method == "POST":
-        name = request.form.get("name")
-        grade = request.form.get("grade")
+        name = request.form.get("name", "").strip()
+        grade = request.form.get("grade", "").strip()
+
+        name_value = name
+        grade_value = grade
 
         # TODO:
         # 1. Validate name
@@ -29,9 +34,24 @@ def add_student():
         # 4. Add to students list as dictionary
         # 5. Redirect to /students
 
-        pass
+        if not name:
+            error = "Name cannot be empty"
+            return render_template("add.html", error=error, name=name_value, grade=grade_value)
 
-    return render_template("add.html", error=error)
+        if not grade.isdigit():
+            error = "Grade must be a number"
+            return render_template("add.html", error=error, name=name_value, grade=grade_value)
+
+        grade = int(grade)
+
+        if grade < 0 or grade >100:
+            error = "Grade must be between 0 and 100"
+            return render_template("add.html", error=error, name=name_value, grade=grade_value)
+
+        students.append({"name": name, "grade": grade})
+        return redirect(url_for("display_students"))
+
+    return render_template("add.html", error=error, name=name_value, grade=grade_value)
 
 
 # ---------------------------------
@@ -54,7 +74,18 @@ def summary():
     # - highest grade
     # - lowest grade
 
-    return render_template("summary.html")
+    if not students:
+        return render_template("summary.html", empty=True)
+
+    grades = [s["grade"] for s in students]
+
+    total = len(grades)
+    avg = sum(grades)/total
+    highest = max(grades)
+    lowest = min(grades)
+
+    return render_template("summary.html", empty=False, total=total, avg=avg, highest=highest, lowest=lowest)
+
 
 
 if __name__ == "__main__":

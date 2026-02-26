@@ -1,5 +1,17 @@
 {% extends "base.html" %}
 
 {% block content %}
-    <h1>TODO: Complete Part 6</h1>
+  <h2>Form</h2>
+
+  {% if error %}
+    <p style="color:red;">{{ error }}</p>
+{% else %}
+    <p>Welcome!</p>
+  {% endif %}
+
+  <form method="POST">
+    <label for="username">Username:</label>
+    <input type="text" id="username" name="username">
+    <button type="submit">Submit</button>
+  </form>
 {% endblock %}
